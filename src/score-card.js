@@ -17,20 +17,34 @@ class ScoreCard {
     let index = 0;
     return this.scores.reduce((acc, next) => {
       let frameScore;
-      if(next.length === 1) {
-        frameScore = next[0];
+      let frameType = this._frameType(next);
+      if(frameType === 'strike') {
+        frameScore = next[0] + this._strike(index);
+      } else if (frameType === 'spare') {
+        frameScore = next[0] + next[1] + this.scores[index + 1][0];
       } else {
-        frameScore = next[0] + next[1];
-      }
-      if (frameScore === 10 && next.length === 2) {
-        frameScore += this.scores[index + 1][0];
-      } else if (frameScore === 10) {
-        frameScore += this.scores[index + 1][0] + this.scores[index + 1][1];
+        frameScore = next[0] + next[1]
       }
       index += 1;
       return acc += frameScore;
     }, 0);
   };
+
+  _strike(index) {
+    let secondScore;
+    this.scores[index + 1].length === 1 ? secondScore = this.scores[index + 2][0] : secondScore = this.scores[index + 1][1];
+    return this.scores[index + 1][0] + secondScore;
+  }
+
+  _frameType(frame) {
+    if (frame.length === 1) {
+      return 'strike';
+    } else if (frame[0] + frame[1] === 10) {
+      return 'spare';
+    } else {
+      return;
+    }
+  }
 }
 
 

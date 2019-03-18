@@ -47,5 +47,9 @@ describe('scorecard', () => {
       scoreCard.scores = [[10], [3, 4]];
       expect(scoreCard.totalScores()).toBe(24);
     });
+    it('spare followed by a strike', () => {
+      scoreCard.scores = [[4,6], [10], [3,3]];
+      expect(scoreCard.totalScores()).toBe(42);
+    })
   });
 });
