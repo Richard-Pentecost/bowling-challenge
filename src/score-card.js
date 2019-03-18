@@ -16,8 +16,17 @@ class ScoreCard {
   totalScores() {
     let index = 0;
     return this.scores.reduce((acc, next) => {
-      let frameScore = next[0] + next[1];
-      frameScore === 10 ? frameScore += this.scores[index + 1][0] : frameScore;
+      let frameScore;
+      if(next.length === 1) {
+        frameScore = next[0];
+      } else {
+        frameScore = next[0] + next[1];
+      }
+      if (frameScore === 10 && next.length === 2) {
+        frameScore += this.scores[index + 1][0];
+      } else if (frameScore === 10) {
+        frameScore += this.scores[index + 1][0] + this.scores[index + 1][1];
+      }
       index += 1;
       return acc += frameScore;
     }, 0);

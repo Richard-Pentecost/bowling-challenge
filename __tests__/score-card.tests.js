@@ -43,5 +43,9 @@ describe('scorecard', () => {
       scoreCard.scores = [[5, 5], [3, 4]];
       expect(scoreCard.totalScores()).toBe(20);
     });
+    it('create final score if there is a strike', () => {
+      scoreCard.scores = [[10], [3, 4]];
+      expect(scoreCard.totalScores()).toBe(24);
+    });
   });
 });
